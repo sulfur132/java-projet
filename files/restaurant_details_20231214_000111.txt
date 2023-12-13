@@ -1,0 +1,19 @@
+ZX Restaurant
+Purok 3 Sitio Sampaguita
+Consolacion, Cebu
+09951236201
+-------------------------------------------------------------------
+Item 						Qty 			Price
+-------------------------------------------------------------------
+ Beef Wellington  			2				1332.00
+ Ramen				2				09.98
+ Tortang Talong  			2				05.98
+ Leche Flan  				2				05.98
+
+Total Amount: 1353.94
+VAT (12%): 162.47
+Total Amount with VAT: 1516.41
+Total: 1353.94
+Pay Bills: 1600.00
+Change: 83.59
+Order#: 1

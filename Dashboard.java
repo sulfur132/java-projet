@@ -9,10 +9,10 @@ import javax.swing.table.DefaultTableModel;
 import java.util.Date;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.awt.*;
 
 
 public class Dashboard extends JFrame {
-
     public Dashboard() {
         initComponents();
 
@@ -20,48 +20,7 @@ public class Dashboard extends JFrame {
         jTable1.getColumnModel().getColumn(0).setPreferredWidth(30);
         jTable1.getColumnModel().getColumn(1).setPreferredWidth(200);
     }
-    
-    //add data in table
-    public void addTable(int id, String name, int quantity, Double price) {
-        DefaultTableModel dt = (DefaultTableModel) jTable1.getModel();
-        DecimalFormat df = new DecimalFormat("00.00");
 
-        double caclulatePrice = price * Double.valueOf(quantity);
-        String totalPrice = df.format(caclulatePrice);
-
-        //no newline when selecting the same item.
-        for (int row = 0; row < jTable1.getRowCount(); row++) {
-
-           if (name == jTable1.getValueAt(row, 1)) {
-                dt.removeRow(jTable1.convertRowIndexToModel(row));
-           }
-        }
-        
-        Vector<Object> v = new Vector<>();
-        
-        v.add(id);
-        v.add(name);
-        v.add(quantity);
-        v.add(totalPrice);
-        
-        dt.addRow(v);
-    }
-    
-    //add price each item
-    public void calc() {
-        int numRows = jTable1.getRowCount();
-        double total = 0.0;
-        
-        for (int i = 0; i < numRows; i++) {
-                double value = Double.parseDouble(jTable1.getValueAt(i, 3).toString());
-                total += value;
-        }
-        DecimalFormat df = new DecimalFormat("00.00");
-        totalLabel.setText(df.format(total));
-    }
-
-
-    //Order System UI Components
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -69,16 +28,19 @@ public class Dashboard extends JFrame {
         jTable1 = new javax.swing.JTable();
         jPanel25 = new javax.swing.JPanel();
         jLabel42 = new javax.swing.JLabel();
-        jLabel43 = new javax.swing.JLabel();
         jLabel47 = new javax.swing.JLabel();
         payBills = new javax.swing.JTextField();
         changeMoney = new javax.swing.JLabel();
-        totalLabel = new javax.swing.JLabel();
-        jButton17 = new javax.swing.JButton();
-        button_print = new javax.swing.JButton();
+        jLabel48 = new javax.swing.JLabel();
+        totalWithVat = new javax.swing.JLabel();
         jButtonPay = new javax.swing.JButton();
+        jButtonPrint = new javax.swing.JButton();
+        jButtonRemove = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         b = new javax.swing.JTextArea();
+        jLabel43 = new javax.swing.JLabel();
+        totalLabel = new javax.swing.JLabel();
+        jButtonTotal = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -181,6 +143,18 @@ public class Dashboard extends JFrame {
         jButton15 = new javax.swing.JButton();
         q15 = new javax.swing.JLabel();
 
+        //non editable cells in jTable
+        jTable1 = new JTable(new DefaultTableModel(new Object[]{"1", "2", "3"},0)) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Override to make all cells non-editable
+            }
+        };
+
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        add(new JScrollPane(jTable1));
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(false);
 
@@ -201,9 +175,6 @@ public class Dashboard extends JFrame {
         jLabel42.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel42.setText("Cash:");
 
-        jLabel43.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabel43.setText("Total:");
-
         jLabel47.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel47.setText("Change:");
 
@@ -212,8 +183,11 @@ public class Dashboard extends JFrame {
         changeMoney.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         changeMoney.setText("00");
 
-        totalLabel.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        totalLabel.setText("00");
+        jLabel48.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
+        jLabel48.setText("Total w/ VAT:");
+
+        totalWithVat.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        totalWithVat.setText("00");
 
         javax.swing.GroupLayout jPanel25Layout = new javax.swing.GroupLayout(jPanel25);
         jPanel25.setLayout(jPanel25Layout);
@@ -221,29 +195,29 @@ public class Dashboard extends JFrame {
             jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel25Layout.createSequentialGroup()
                 .addGroup(jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel25Layout.createSequentialGroup()
-                        .addGap(61, 61, 61)
-                        .addComponent(jLabel47))
-                    .addGroup(jPanel25Layout.createSequentialGroup()
-                        .addGap(85, 85, 85)
-                        .addGroup(jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel48)
+                    .addGroup(jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel25Layout.createSequentialGroup()
+                            .addGap(61, 61, 61)
+                            .addComponent(jLabel47))
+                        .addGroup(jPanel25Layout.createSequentialGroup()
+                            .addGap(85, 85, 85)
                             .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(payBills, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(changeMoney, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(totalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(payBills, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                    .addComponent(totalWithVat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(changeMoney, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
         jPanel25Layout.setVerticalGroup(
             jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel25Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addContainerGap()
                 .addGroup(jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(totalLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel48, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(totalWithVat, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel25Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(payBills, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -254,33 +228,33 @@ public class Dashboard extends JFrame {
                 .addGap(22, 22, 22))
         );
 
-        jButton17.setBackground(new java.awt.Color(31, 92, 111));
-        jButton17.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jButton17.setForeground(new java.awt.Color(255, 255, 255));
-        jButton17.setText("Pay");
-        jButton17.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton17ActionPerformed(evt);
-            }
-        });
-
-        button_print.setBackground(new java.awt.Color(31, 92, 111));
-        button_print.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        button_print.setForeground(new java.awt.Color(255, 255, 255));
-        button_print.setText("Print");
-        button_print.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button_printActionPerformed(evt);
-            }
-        });
-
-        jButtonPay.setBackground(new java.awt.Color(255, 102, 102));
-        jButtonPay.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jButtonPay.setBackground(new java.awt.Color(31, 92, 111));
+        jButtonPay.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButtonPay.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonPay.setText("Remove");
+        jButtonPay.setText("Pay");
         jButtonPay.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton16ActionPerformed(evt);
+                jButtonPayActionPerformed(evt);
+            }
+        });
+
+        jButtonPrint.setBackground(new java.awt.Color(31, 92, 111));
+        jButtonPrint.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButtonPrint.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonPrint.setText("Print");
+        jButtonPrint.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPrintActionPerformed(evt);
+            }
+        });
+
+        jButtonRemove.setBackground(new java.awt.Color(255, 102, 102));
+        jButtonRemove.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButtonRemove.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonRemove.setText("Remove");
+        jButtonRemove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRemoveActionPerformed(evt);
             }
         });
 
@@ -288,6 +262,22 @@ public class Dashboard extends JFrame {
         b.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         b.setRows(5);
         jScrollPane2.setViewportView(b);
+
+        jLabel43.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabel43.setText("Total:");
+
+        totalLabel.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        totalLabel.setText("00");
+
+        jButtonTotal.setBackground(new java.awt.Color(255, 102, 102));
+        jButtonTotal.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButtonTotal.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonTotal.setText("Total");
+        jButtonTotal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonTotalActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -299,16 +289,23 @@ public class Dashboard extends JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 389, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButtonPay, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jPanel25, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel25, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(totalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonTotal)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonPay, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button_print, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18))))
+                        .addComponent(jButtonPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -317,13 +314,22 @@ public class Dashboard extends JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
                     .addComponent(jScrollPane2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonPay, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton17, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(button_print, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel43, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(totalLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jButtonPay, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButtonPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jButtonRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButtonTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel25, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(31, 92, 111));
@@ -380,7 +386,7 @@ public class Dashboard extends JFrame {
         jLabel4.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel4.setText("Chicken Ala King");
 
-        jLabel5.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel5.setText("$3.99");
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -394,7 +400,7 @@ public class Dashboard extends JFrame {
             }
         });
 
-        q1.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        q1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         q1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         q1.setText("0");
 
@@ -462,7 +468,7 @@ public class Dashboard extends JFrame {
         jLabel9.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel9.setText("Pork Chao Fan");
 
-        jLabel10.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel10.setText("$5.99");
 
         jLabel11.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -475,7 +481,7 @@ public class Dashboard extends JFrame {
             }
         });
 
-        q2.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        q2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         q2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         q2.setText("0");
 
@@ -519,7 +525,7 @@ public class Dashboard extends JFrame {
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel14.setText("Ramen");
 
-        jLabel15.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel15.setText("$4.99");
 
         jLabel16.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -533,7 +539,7 @@ public class Dashboard extends JFrame {
             }
         });
 
-        q4.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        q4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         q4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         q4.setText("0");
 
@@ -575,7 +581,7 @@ public class Dashboard extends JFrame {
         jLabel19.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel19.setText("Whoopers Burger");
 
-        jLabel20.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel20.setText("$6.99");
         jLabel20.setToolTipText("");
 
@@ -589,7 +595,7 @@ public class Dashboard extends JFrame {
             }
         });
 
-        q3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        q3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         q3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         q3.setText("0");
 
@@ -633,7 +639,7 @@ public class Dashboard extends JFrame {
         jLabel24.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel24.setText("Beef Wellington");
 
-        jLabel25.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel25.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel25.setText("$666.00");
 
         jLabel26.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -647,7 +653,7 @@ public class Dashboard extends JFrame {
             }
         });
 
-        q5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        q5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         q5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         q5.setText("0");
 
@@ -693,7 +699,7 @@ public class Dashboard extends JFrame {
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel29.setText("Siomai");
 
-        jLabel30.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel30.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel30.setText("$10.00");
 
@@ -707,7 +713,7 @@ public class Dashboard extends JFrame {
             }
         });
 
-        q6.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        q6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         q6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         q6.setText("0");
 
@@ -758,7 +764,7 @@ public class Dashboard extends JFrame {
         jLabel34.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel34.setText("Inasal na baboy");
 
-        jLabel35.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel35.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel35.setText("$500.00");
 
         jLabel36.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -771,7 +777,7 @@ public class Dashboard extends JFrame {
             }
         });
 
-        q8.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        q8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         q8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         q8.setText("0");
 
@@ -821,7 +827,7 @@ public class Dashboard extends JFrame {
         jLabel39.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel39.setText("  Chicken Curry ");
 
-        jLabel40.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel40.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel40.setText("$5.00");
 
         jLabel41.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -834,7 +840,7 @@ public class Dashboard extends JFrame {
             }
         });
 
-        q7.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        q7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         q7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         q7.setText("0");
 
@@ -885,7 +891,7 @@ public class Dashboard extends JFrame {
         jLabel44.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel44.setText("Tortang Talong");
 
-        jLabel45.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel45.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel45.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel45.setText("$2.99");
 
@@ -900,7 +906,7 @@ public class Dashboard extends JFrame {
             }
         });
 
-        q9.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        q9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         q9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         q9.setText("0");
 
@@ -947,7 +953,7 @@ public class Dashboard extends JFrame {
         jLabel49.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel49.setText("     Leche Flan");
 
-        jLabel50.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel50.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel50.setText("$2.99");
 
         jLabel51.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -962,7 +968,7 @@ public class Dashboard extends JFrame {
             }
         });
 
-        q10.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        q10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         q10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         q10.setText("0");
 
@@ -1015,7 +1021,7 @@ public class Dashboard extends JFrame {
         jLabel54.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel54.setText("         Bulalo");
 
-        jLabel55.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel55.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel55.setText("$100.00");
 
         jLabel56.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -1028,7 +1034,7 @@ public class Dashboard extends JFrame {
             }
         });
 
-        q11.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        q11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         q11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         q11.setText("0");
 
@@ -1079,7 +1085,7 @@ public class Dashboard extends JFrame {
         jLabel59.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel59.setText("Bicol Express");
 
-        jLabel60.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel60.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel60.setText("$50.00");
 
         jLabel61.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -1092,7 +1098,7 @@ public class Dashboard extends JFrame {
             }
         });
 
-        q12.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        q12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         q12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         q12.setText("0");
 
@@ -1147,7 +1153,7 @@ public class Dashboard extends JFrame {
         jLabel81.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
         jLabel81.setText("Sinigang na Baboy");
 
-        jLabel82.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel82.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel82.setText("$10.00");
 
         jLabel83.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -1161,7 +1167,7 @@ public class Dashboard extends JFrame {
             }
         });
 
-        q13.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        q13.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         q13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         q13.setText("0");
 
@@ -1214,7 +1220,7 @@ public class Dashboard extends JFrame {
         jLabel87.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel87.setText("Pork Sisig");
 
-        jLabel88.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel88.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel88.setText("$40.00");
 
         jLabel89.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -1227,7 +1233,7 @@ public class Dashboard extends JFrame {
             }
         });
 
-        q14.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        q14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         q14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         q14.setText("0");
 
@@ -1283,7 +1289,7 @@ public class Dashboard extends JFrame {
         jLabel93.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel93.setText("Tinolang Manok");
 
-        jLabel94.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabel94.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel94.setText("$3.99");
 
         jLabel95.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
@@ -1297,7 +1303,7 @@ public class Dashboard extends JFrame {
             }
         });
 
-        q15.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        q15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         q15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         q15.setText("0");
 
@@ -1434,7 +1440,7 @@ public class Dashboard extends JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 755, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 739, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -1444,25 +1450,63 @@ public class Dashboard extends JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 637, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(45, 45, 45))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(45, Short.MAX_VALUE))))
+                        .addContainerGap(61, Short.MAX_VALUE))))
         );
 
         pack();
         setLocationRelativeTo(null);
-    }// End of UI Components                       
+    }// </editor-fold>          
 
+    //add data in table
+    public void addTable(int id, String name, int quantity, Double price) {
+        DefaultTableModel dt = (DefaultTableModel) jTable1.getModel();
+        DecimalFormat df = new DecimalFormat("00.00");
+
+        //multiplying price and quantity products
+        double caclulatePrice = price * Double.valueOf(quantity);
+        String totalPrice = df.format(caclulatePrice);
+
+        // no newline when selecting the same item.
+        for (int row = 0; row < jTable1.getRowCount(); row++) {
+           if (name == jTable1.getValueAt(row, 1)) {
+                dt.removeRow(jTable1.convertRowIndexToModel(row));
+           }
+        }
+        
+        Vector<Object> v = new Vector<>();
+        
+        v.add(id);
+        v.add(name);
+        v.add(quantity);
+        v.add(totalPrice);
+        
+        dt.addRow(v);
+    }
     
+    //add price each item
+    public void calculateTotal() {
+        int numRows = jTable1.getRowCount();
+        double total = 0.0;
+        
+        for (int i = 0; i < numRows; i++) {
+                double value = Double.parseDouble(jTable1.getValueAt(i, 3).toString());
+                total += value;
+        }
+        DecimalFormat df = new DecimalFormat("00.00");
+        totalLabel.setText(df.format(total));
+    }
+
     //qty incrementing when click multiple times.
     private void jButton1ActionPerformed(ActionEvent evt) {                                         
         int i = Integer.valueOf(q1.getText());
         i++;
         q1.setText(String.valueOf(i));                                         
         addTable(1, "Chicken Ala King  ", i, 3.99);
-        calc();
+        calculateTotal();
     }
 
     private void jButton2ActionPerformed(ActionEvent evt) {                                         
@@ -1470,7 +1514,7 @@ public class Dashboard extends JFrame {
         i++;
         q2.setText(String.valueOf(i));                                         
         addTable(2, "Pork Chao Fan  ", i, 5.99);
-        calc();
+        calculateTotal();
     }         
 
     private void jButton3ActionPerformed(ActionEvent evt) {                                         
@@ -1478,7 +1522,7 @@ public class Dashboard extends JFrame {
         i++;
         q3.setText(String.valueOf(i));                                         
         addTable(3, "Whoopers Burger  ", i, 6.99);
-        calc();
+        calculateTotal();
     }                                        
 
     private void jButton4ActionPerformed(ActionEvent evt) {                                         
@@ -1486,7 +1530,7 @@ public class Dashboard extends JFrame {
         i++;
         q4.setText(String.valueOf(i));                                         
         addTable(4, "Ramen\t", i, 4.99);
-        calc();
+        calculateTotal();
     }                                        
 
     private void jButton5ActionPerformed(ActionEvent evt) {                                         
@@ -1494,7 +1538,7 @@ public class Dashboard extends JFrame {
         i++;
         q5.setText(String.valueOf(i));                                         
         addTable(5, "Beef Wellington  ", i, 666.00);
-        calc();
+        calculateTotal();
     }                                        
 
     private void jButton6ActionPerformed(ActionEvent evt) {                                         
@@ -1502,7 +1546,7 @@ public class Dashboard extends JFrame {
         i++;
         q6.setText(String.valueOf(i));                                         
         addTable(6, "Siomai  \t", i, 10.00);
-        calc();
+        calculateTotal();
     }                                        
 
     private void jButton7ActionPerformed(ActionEvent evt) {                                         
@@ -1510,7 +1554,7 @@ public class Dashboard extends JFrame {
         i++;
         q7.setText(String.valueOf(i));                                         
         addTable(7, "Chicken Curry  ", i, 5.00);
-        calc();
+        calculateTotal();
     }                                        
 
     private void jButton8ActionPerformed(ActionEvent evt) {                                         
@@ -1518,7 +1562,7 @@ public class Dashboard extends JFrame {
         i++;
         q8.setText(String.valueOf(i));                                         
         addTable(8, "Inasal na Baboy  ", i, 500.00);
-        calc();
+        calculateTotal();
     }                                        
 
     private void jButton9ActionPerformed(ActionEvent evt) {                                         
@@ -1526,7 +1570,7 @@ public class Dashboard extends JFrame {
         i++;
         q9.setText(String.valueOf(i));                                         
         addTable(9, "Tortang Talong  ", i, 2.99);
-        calc();
+        calculateTotal();
     }
     
     private void jButton10ActionPerformed(ActionEvent evt) {
@@ -1534,7 +1578,7 @@ public class Dashboard extends JFrame {
         i++;
         q10.setText(String.valueOf(i));                                         
         addTable(10, "Leche Flan  \t", i, 2.99);
-        calc();
+        calculateTotal();
     }
 
     private void jButton11ActionPerformed(ActionEvent evt) {                                          
@@ -1542,7 +1586,7 @@ public class Dashboard extends JFrame {
         i++;
         q11.setText(String.valueOf(i));                                         
         addTable(11, "Bulalo  \t", i, 100.00);
-        calc();
+        calculateTotal();
     }                                         
 
     private void jButton12ActionPerformed(ActionEvent evt) {                                          
@@ -1550,7 +1594,7 @@ public class Dashboard extends JFrame {
         i++;
         q12.setText(String.valueOf(i));                                         
         addTable(12, "Bicol Express  ", i, 50.00);
-        calc();
+        calculateTotal();
     }                                         
 
     private void jButton13ActionPerformed(ActionEvent evt) {                                          
@@ -1558,7 +1602,7 @@ public class Dashboard extends JFrame {
         i++;
         q13.setText(String.valueOf(i));                                         
         addTable(13, "Sinigang na Baboy  ", i, 10.00);
-        calc();
+        calculateTotal();
     }                                         
 
     private void jButton14ActionPerformed(ActionEvent evt) {                                          
@@ -1566,7 +1610,7 @@ public class Dashboard extends JFrame {
         i++;
         q14.setText(String.valueOf(i));                                         
         addTable(14, "Pork Sisig  \t", i, 40.00);
-        calc();
+        calculateTotal();
     }
 
     private void jButton15ActionPerformed(ActionEvent evt) {                                          
@@ -1574,14 +1618,46 @@ public class Dashboard extends JFrame {
         i++;
         q15.setText(String.valueOf(i));                       
         addTable(15, "Tinolang Manok  ", i, 3.00);
-        calc();
+        calculateTotal();
     }
 
     // Declare a variable to track payment status
     private boolean isPaid = false;
 
+    private boolean jButtonTotalClicked = false;
+
+    private void jButtonTotalActionPerformed(java.awt.event.ActionEvent evt) {
+        //return error if table is empty
+        if (jTable1.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "The table is empty. Please add items before calculating the total.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        double totalBill = Double.parseDouble(totalLabel.getText());
+
+        double vat = 0.12 * totalBill;
+        double totalwithVat = totalBill + vat;
+
+        // Format the total amount with VAT using DecimalFormat
+        DecimalFormat df = new DecimalFormat("0.00");
+        String totalWithVatFormatted = df.format(totalwithVat);
+
+        // display total amount with VAT
+        totalWithVat.setText(totalWithVatFormatted);
+
+        jButtonTotalClicked = true;
+    }
+
     //pay button function
-    private void jButton17ActionPerformed(ActionEvent evt) {                                          
+    private void jButtonPayActionPerformed(ActionEvent evt) {
+
+        // Check if jButtonTotal has been clicked
+        if (!jButtonTotalClicked) {
+            // Display an error message
+            JOptionPane.showMessageDialog(this, "Please click the total button before attempting to pay.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
         // Check if the table is empty
         if (jTable1.getRowCount() == 0) {
             // Display an error message
@@ -1601,8 +1677,15 @@ public class Dashboard extends JFrame {
 
         try {
             // Parse the values and perform calculations
-            double totalBill = Double.parseDouble(totalLabel.getText());
+            double totalBill = Double.parseDouble(totalWithVat.getText());
             double payBill = Double.parseDouble(payBillsText);
+            
+            // Check if totalBill is zero
+            if (totalBill == 0.0) {
+                // Display an error message
+                JOptionPane.showMessageDialog(this, "The total amount is zero. Please click the total button before attempting to pay.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
             // Check if payBill is less than totalBill
             if (payBill < totalBill) {
@@ -1610,7 +1693,7 @@ public class Dashboard extends JFrame {
                 JOptionPane.showMessageDialog(this, "Insufficient payment. Please enter an amount equal to or greater than the total bill.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
+            
             double change = payBill - totalBill;
 
             // Format the change using DecimalFormat
@@ -1619,13 +1702,17 @@ public class Dashboard extends JFrame {
 
             //set true if user paid.
             isPaid = true;
+
+            JOptionPane.showMessageDialog(this, "I recieved $" + payBill + ". Press print to continue.", "Information", JOptionPane.INFORMATION_MESSAGE);
+
+            //Disable remove button
+            jButtonRemove.setEnabled(false);
         } catch (NumberFormatException e) {
             // Handle the case where the text cannot be parsed as a double (non-numeric input)
             JOptionPane.showMessageDialog(this, "Invalid input. Please enter a valid numeric amount.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    
     public void resetPage() {
         DefaultTableModel dt = (DefaultTableModel) jTable1.getModel();
         dt.setRowCount(0);
@@ -1645,13 +1732,20 @@ public class Dashboard extends JFrame {
         q13.setText("0");
         q14.setText("0");
         q15.setText("0");
+        totalWithVat.setText("00");
         totalLabel.setText("00");
         payBills.setText("");
         changeMoney.setText("00");
     }
+
+    //increment order# in receipt
+    private int index = 1;
+
+    //increment order# in .txt file
+    private int index2 = 1;
     
     //printing products in receipt
-    private void button_printActionPerformed(ActionEvent evt) {
+    private void jButtonPrintActionPerformed(ActionEvent evt) {
 
         if (jTable1.getRowCount() == 0) {
             JOptionPane.showMessageDialog(this, "The table is empty. Add items before attempting to print.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -1665,11 +1759,11 @@ public class Dashboard extends JFrame {
         }
         
         try {
-            // Your existing code for displaying details
+            //displaying details in receipt
             b.setText("\n\n\t          ZX Restaurant\n");
             b.setText(b.getText() + "                           Purok 3 Sitio Sampaguita\n");
-            b.setText(b.getText() + "                           Consolacion, Cebu\n");
-            b.setText(b.getText() + "                           09951236201\n");
+            b.setText(b.getText() + "                               Consolacion, Cebu\n");
+            b.setText(b.getText() + "                                   09951236201\n");
             b.setText(b.getText() + "-------------------------------------------------------------------\n");
             b.setText(b.getText() + "  Item \t\tQty \tPrice" + "\n");
             b.setText(b.getText() + "-------------------------------------------------------------------\n");
@@ -1702,7 +1796,7 @@ public class Dashboard extends JFrame {
             b.setText(b.getText() + "-------------------------------------------------------------------\n");
 
             // Display total amount, pay bills, and change in the text area
-            b.setText(b.getText() + "Total: " + String.format("%.2f", totalAmount) + "\n");
+            b.setText(b.getText() + "Total: " + String.format("%.2f", totalAmountWithVat) + "\n");
             
             // Assuming you have a variable payBill representing the amount paid
             double payBill = Double.parseDouble(payBills.getText());
@@ -1710,6 +1804,8 @@ public class Dashboard extends JFrame {
             
             b.setText(b.getText() + "Amount: " + String.format("%.2f", payBill) + "\n");
             b.setText(b.getText() + "Change: " + String.format("%.2f", change) + "\n");
+            b.setText(b.getText() + "Order# : " + index + "\n");
+            index++;
 
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
             String filename = "files/restaurant_details_" + dateFormat.format(new Date()) + ".txt";
@@ -1743,13 +1839,21 @@ public class Dashboard extends JFrame {
                 writer.write("Total: " + String.format("%.2f", totalAmount) + "\n");
                 writer.write("Pay Bills: " + String.format("%.2f", payBill) + "\n");
                 writer.write("Change: " + String.format("%.2f", change) + "\n");
+                writer.write("Order#: " + index2 + "\n");
+                index2++;
             }
 
             // Display a success message (optional)
             JOptionPane.showMessageDialog(this, "Details written to " + filename, "Success", JOptionPane.INFORMATION_MESSAGE);
 
+            //resets page after printing receipt
             resetPage();
+
+            //set print to false after 2nd order onwards
             isPaid = false;
+
+            //remove button set true after printing reciept
+            jButtonRemove.setEnabled(true);
 
         } catch (IOException e) {
             // Handle IOException
@@ -1761,13 +1865,13 @@ public class Dashboard extends JFrame {
     }             
 
     //remove button
-    private void jButton16ActionPerformed(ActionEvent evt) {                                          
+    private void jButtonRemoveActionPerformed(ActionEvent evt) {                                          
          DefaultTableModel dt = (DefaultTableModel) jTable1.getModel();
          
         // Check if any row is selected
         int selectedRow = jTable1.getSelectedRow();
+
         if (selectedRow == -1) {
-            
             // Display an error message if no row is selected
             JOptionPane.showMessageDialog(this, "Please select a row to remove.", "Error", JOptionPane.ERROR_MESSAGE);
             return; // Exit the method if no row is selected
@@ -1778,6 +1882,10 @@ public class Dashboard extends JFrame {
         // Remove product
         dt.removeRow(selectedRow);
         
+        if (jTable1.getRowCount() == 0) {
+            totalWithVat.setText("00");
+        } 
+
         //qty set zero if remove in the table
         switch (r) {
             case "1":
@@ -1826,11 +1934,11 @@ public class Dashboard extends JFrame {
                 q15.setText("0");
                 break;
         }
-        calc();
+        calculateTotal();
     }                                      
 
     public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
+        EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Dashboard().setVisible(true);
             }
@@ -1839,7 +1947,6 @@ public class Dashboard extends JFrame {
 
     // Variables declaration - do not modify          
     private javax.swing.JTextArea b;
-    private javax.swing.JButton button_print;
     private javax.swing.JLabel changeMoney;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
@@ -1848,8 +1955,6 @@ public class Dashboard extends JFrame {
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButtonPay;
-    private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -1858,6 +1963,10 @@ public class Dashboard extends JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
+    private javax.swing.JButton jButtonPay;
+    private javax.swing.JButton jButtonPrint;
+    private javax.swing.JButton jButtonRemove;
+    private javax.swing.JButton jButtonTotal;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1887,6 +1996,7 @@ public class Dashboard extends JFrame {
     private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel46;
     private javax.swing.JLabel jLabel47;
+    private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel50;
@@ -1954,5 +2064,6 @@ public class Dashboard extends JFrame {
     private javax.swing.JLabel q8;
     private javax.swing.JLabel q9;
     private javax.swing.JLabel totalLabel;
+    private javax.swing.JLabel totalWithVat;
     // End of variables declaration                   
 }
