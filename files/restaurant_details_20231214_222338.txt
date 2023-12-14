@@ -1,0 +1,30 @@
+ZX Restaurant
+Purok 3 Sitio Sampaguita
+Consolacion, Cebu
+09951236201
+-------------------------------------------------------------------
+Item 						Qty 			Price
+-------------------------------------------------------------------
+ Ramen				2				09.98
+ Beef Wellington  			2				1332.00
+ Leche Flan  				2				05.98
+ Tortang Talong  			2				05.98
+ Whoopers Burger  			2				13.98
+ Inasal na Baboy  			2				1000.00
+ Pork Chao Fan  			2				11.98
+ Chicken Curry  			2				10.00
+ Chicken Ala King  			2				07.98
+ Siomai  				2				20.00
+ Bulalo  				2				200.00
+ Bicol Express  			2				100.00
+ Sinigang na Baboy  			2				20.00
+ Pork Sisig  				2				80.00
+ Tinolang Manok  			2				06.00
+
+Total Amount: 2823.88
+VAT (12%): 338.87
+Total Amount with VAT: 3162.75
+Total: 2823.88
+Pay Bills: 3162.75
+Change: 0.00
+Order#: 1
