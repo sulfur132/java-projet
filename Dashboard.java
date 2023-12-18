@@ -10,17 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
 import javax.swing.*;
-<<<<<<< HEAD
 import java.awt.*;
 
 class Dashboard extends JFrame {
-=======
-import java.awt.event.ActionEvent;
-import java.awt.*;
-
-
-public class Dashboard extends JFrame {
->>>>>>> 8ccebbd415e97790d674e175e9d4aaa24c6f3a9d
     public Dashboard() {
         initComponents();
 
@@ -236,7 +228,6 @@ public class Dashboard extends JFrame {
                 .addGap(22, 22, 22))
         );
 
-<<<<<<< HEAD
         jButtonPay.setBackground(new Color(31, 92, 111));
         jButtonPay.setFont(new Font("Segoe UI", 0, 14)); // NOI18N
         jButtonPay.setForeground(new Color(255, 255, 255));
@@ -263,34 +254,6 @@ public class Dashboard extends JFrame {
         jButtonRemove.setText("Remove");
         jButtonRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-=======
-        jButtonPay.setBackground(new java.awt.Color(31, 92, 111));
-        jButtonPay.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButtonPay.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonPay.setText("Pay");
-        jButtonPay.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonPayActionPerformed(evt);
-            }
-        });
-
-        jButtonPrint.setBackground(new java.awt.Color(31, 92, 111));
-        jButtonPrint.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButtonPrint.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonPrint.setText("Print");
-        jButtonPrint.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonPrintActionPerformed(evt);
-            }
-        });
-
-        jButtonRemove.setBackground(new java.awt.Color(255, 102, 102));
-        jButtonRemove.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButtonRemove.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonRemove.setText("Remove");
-        jButtonRemove.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
->>>>>>> 8ccebbd415e97790d674e175e9d4aaa24c6f3a9d
                 jButtonRemoveActionPerformed(evt);
             }
         });
@@ -300,8 +263,8 @@ public class Dashboard extends JFrame {
         b.setRows(5);
         jScrollPane2.setViewportView(b);
 
-        jLabel43.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabel43.setText("Total:");
+        jLabel43.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        jLabel43.setText("Sub-Total:");
 
         totalLabel.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         totalLabel.setText("00");
@@ -373,7 +336,7 @@ public class Dashboard extends JFrame {
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("XZ Restaurant");
+        jLabel1.setText("EZOrder");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -1503,11 +1466,7 @@ public class Dashboard extends JFrame {
         DefaultTableModel dt = (DefaultTableModel) jTable1.getModel();
         DecimalFormat df = new DecimalFormat("00.00");
 
-<<<<<<< HEAD
         //variable declarations for multiplying price and quantity products
-=======
-        //multiplying price and quantity products
->>>>>>> 8ccebbd415e97790d674e175e9d4aaa24c6f3a9d
         double caclulatePrice = price * Double.valueOf(quantity);
         String totalPrice = df.format(caclulatePrice);
 
@@ -1518,10 +1477,7 @@ public class Dashboard extends JFrame {
            }
         }
         
-<<<<<<< HEAD
-        //Display Orders in Table
-=======
->>>>>>> 8ccebbd415e97790d674e175e9d4aaa24c6f3a9d
+        // Display Orders in Table
         Vector<Object> v = new Vector<>();
         
         v.add(id);
@@ -1541,23 +1497,16 @@ public class Dashboard extends JFrame {
                 double value = Double.parseDouble(jTable1.getValueAt(i, 3).toString());
                 total += value;
         }
-<<<<<<< HEAD
 
-=======
->>>>>>> 8ccebbd415e97790d674e175e9d4aaa24c6f3a9d
         DecimalFormat df = new DecimalFormat("00.00");
         totalLabel.setText(df.format(total));
     }
 
-<<<<<<< HEAD
     //incrementing qty when clicked more than once.
-=======
-    //qty incrementing when click multiple times.
->>>>>>> 8ccebbd415e97790d674e175e9d4aaa24c6f3a9d
     private void jButton1ActionPerformed(ActionEvent evt) {                                         
         int i = Integer.valueOf(q1.getText());
         i++;
-        q1.setText(String.valueOf(i));                                         
+        q1.setText(String.valueOf(i));
         addTable(1, "Chicken Ala King  ", i, 3.99);
         calculateTotal();
     }
@@ -1568,11 +1517,7 @@ public class Dashboard extends JFrame {
         q2.setText(String.valueOf(i));                                         
         addTable(2, "Pork Chao Fan  ", i, 5.99);
         calculateTotal();
-<<<<<<< HEAD
     }
-=======
-    }         
->>>>>>> 8ccebbd415e97790d674e175e9d4aaa24c6f3a9d
 
     private void jButton3ActionPerformed(ActionEvent evt) {                                   
         int i = Integer.valueOf(q3.getText());
@@ -1580,11 +1525,7 @@ public class Dashboard extends JFrame {
         q3.setText(String.valueOf(i));                                         
         addTable(3, "Whoopers Burger  ", i, 6.99);
         calculateTotal();
-<<<<<<< HEAD
     }
-=======
-    }                                        
->>>>>>> 8ccebbd415e97790d674e175e9d4aaa24c6f3a9d
 
     private void jButton4ActionPerformed(ActionEvent evt) {                                         
         int i = Integer.valueOf(q4.getText());
@@ -1701,7 +1642,6 @@ public class Dashboard extends JFrame {
         jButton15.setEnabled(false);
 
         //Disable remove button
-        
         jButtonTotal.setEnabled(false);
         jButtonRemove.setEnabled(false);
     }
@@ -1729,22 +1669,18 @@ public class Dashboard extends JFrame {
         jButtonRemove.setEnabled(true);
         jButtonPay.setEnabled(true);
     }
-
-
+    
     // Declare a variable to track payment status
     private boolean isPaid = false;
 
     private boolean jButtonTotalClicked = false;
 
-<<<<<<< HEAD
     private void jButtonTotalActionPerformed(ActionEvent evt) {
-=======
-    private void jButtonTotalActionPerformed(java.awt.event.ActionEvent evt) {
->>>>>>> 8ccebbd415e97790d674e175e9d4aaa24c6f3a9d
+
         //return error if table is empty
         if (jTable1.getRowCount() == 0) {
             JOptionPane.showMessageDialog(this, "The table is empty. Please add items before calculating the total.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
+            return;// Exit method
         }
 
         double totalBill = Double.parseDouble(totalLabel.getText());
@@ -1756,18 +1692,13 @@ public class Dashboard extends JFrame {
         DecimalFormat df = new DecimalFormat("0.00");
         String totalWithVatFormatted = df.format(totalwithVat);
 
-<<<<<<< HEAD
-        int name = JOptionPane.showConfirmDialog(null, "Your Total with 12%VAT is $" + Double.parseDouble(totalWithVatFormatted) + "\n Do you wish to continue?", "Information", JOptionPane.YES_NO_OPTION);
+        int conditionModal = JOptionPane.showConfirmDialog(null, "Your Total with 12%VAT is $" + Double.parseDouble(totalWithVatFormatted) + "\n Do you wish to continue?", "Question", JOptionPane.YES_NO_OPTION);
 
-        if(name == JOptionPane.YES_OPTION){
+        if(conditionModal == JOptionPane.YES_OPTION) {
             // display total amount with VAT
             totalWithVat.setText(totalWithVatFormatted);
             disablePage();
         }
-=======
-        // display total amount with VAT
-        totalWithVat.setText(totalWithVatFormatted);
->>>>>>> 8ccebbd415e97790d674e175e9d4aaa24c6f3a9d
 
         jButtonTotalClicked = true;
     }
@@ -1779,7 +1710,7 @@ public class Dashboard extends JFrame {
         if (!jButtonTotalClicked) {
             // Display an error message
             JOptionPane.showMessageDialog(this, "Please click the total button before attempting to pay.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
+            return; //Exit the method
         }
         
         // Check if the table is empty
@@ -1807,7 +1738,7 @@ public class Dashboard extends JFrame {
             // Check if totalBill is zero
             if (totalBill == 0.0) {
                 // Display an error message
-                JOptionPane.showMessageDialog(this, "The total amount is zero. Please click the total button before attempting to pay.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "The total amount with VAT is zero.\n Please click the total button before attempting to pay.", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -1829,14 +1760,10 @@ public class Dashboard extends JFrame {
 
             JOptionPane.showMessageDialog(this, "I recieved $" + payBill + ". Press print to continue.", "Information", JOptionPane.INFORMATION_MESSAGE);
 
-<<<<<<< HEAD
             //disable paybutton when user paid.
             jButtonPay.setEnabled(false);
+            payBills.setEnabled(false);
 
-=======
-            //Disable remove button
-            jButtonRemove.setEnabled(false);
->>>>>>> 8ccebbd415e97790d674e175e9d4aaa24c6f3a9d
         } catch (NumberFormatException e) {
             // Handle the case where the text cannot be parsed as a double (non-numeric input)
             JOptionPane.showMessageDialog(this, "Invalid input. Please enter a valid numeric amount.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -1885,12 +1812,12 @@ public class Dashboard extends JFrame {
         //if user not paid, return false.
         if (!isPaid) {
             JOptionPane.showMessageDialog(this, "Payment not received. Cannot print receipt.", "Error", JOptionPane.ERROR_MESSAGE);
-            return; 
+            return;
         }
         
         try {
             //displaying details in receipt
-            b.setText("\n\n\t          ZX Restaurant\n");
+            b.setText("\n\n\t          EZOrder Restaurant\n");
             b.setText(b.getText() + "                           Purok 3 Sitio Sampaguita\n");
             b.setText(b.getText() + "                               Consolacion, Cebu\n");
             b.setText(b.getText() + "                                   09951236201\n");
@@ -1920,7 +1847,7 @@ public class Dashboard extends JFrame {
             double totalAmountWithVat = totalAmount + vat;
 
             b.setText(b.getText() + "-------------------------------------------------------------------\n");
-            b.setText(b.getText() + "\nTotal Amount: " + String.format("%.2f", totalAmount) + "\n");
+            b.setText(b.getText() + "\nSub-Total: " + String.format("%.2f", totalAmount) + "\n");
             b.setText(b.getText() + "VAT (12%): " + String.format("%.2f", vat) + "\n");
             b.setText(b.getText() + "Total Amount with VAT: " + String.format("%.2f", totalAmountWithVat) + "\n");
             b.setText(b.getText() + "-------------------------------------------------------------------\n");
@@ -1943,7 +1870,7 @@ public class Dashboard extends JFrame {
             // Create a BufferedWriter and FileWriter to write to a .txt file
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
                 // Write the restaurant details to the file
-                writer.write("ZX Restaurant\n");
+                writer.write("EZOrder Restaurant\n");
                 writer.write("Purok 3 Sitio Sampaguita\n");
                 writer.write("Consolacion, Cebu\n");
                 writer.write("09951236201\n");
@@ -1961,7 +1888,7 @@ public class Dashboard extends JFrame {
                 }
 
                 // Write total amount, VAT, and total amount with VAT to the file
-                writer.write("\nTotal Amount: " + String.format("%.2f", totalAmount) + "\n");
+                writer.write("\nSub-Total: " + String.format("%.2f", totalAmount) + "\n");
                 writer.write("VAT (12%): " + String.format("%.2f", vat) + "\n");
                 writer.write("Total Amount with VAT: " + String.format("%.2f", totalAmountWithVat) + "\n");
 
@@ -1982,14 +1909,12 @@ public class Dashboard extends JFrame {
             //set print to false after 2nd order onwards
             isPaid = false;
 
-<<<<<<< HEAD
 
             //enable menu items when details printed.
             enablePage();
-=======
-            //remove button set true after printing reciept
-            jButtonRemove.setEnabled(true);
->>>>>>> 8ccebbd415e97790d674e175e9d4aaa24c6f3a9d
+
+            //enable textfield
+            payBills.setEnabled(true);
 
         } catch (IOException e) {
             // Handle IOException
@@ -2001,8 +1926,9 @@ public class Dashboard extends JFrame {
     }             
 
     //remove button
-    private void jButtonRemoveActionPerformed(ActionEvent evt) {                                          
-         DefaultTableModel dt = (DefaultTableModel) jTable1.getModel();
+    private void jButtonRemoveActionPerformed(ActionEvent evt) {
+
+        DefaultTableModel dt = (DefaultTableModel) jTable1.getModel();
          
         // Check if any row is selected
         int selectedRow = jTable1.getSelectedRow();
@@ -2018,9 +1944,9 @@ public class Dashboard extends JFrame {
         // Remove product
         dt.removeRow(selectedRow);
         
-        if (jTable1.getRowCount() == 0) {
-            totalWithVat.setText("00");
-        } 
+        // if (jTable1.getRowCount() == 0) {
+        //     totalWithVat.setText("00");
+        // } 
 
         //qty set zero if remove in the table
         switch (r) {
@@ -2071,7 +1997,7 @@ public class Dashboard extends JFrame {
                 break;
         }
         calculateTotal();
-    }                                      
+    }
 
     public static void main(String args[]) {
         EventQueue.invokeLater(new Runnable() {

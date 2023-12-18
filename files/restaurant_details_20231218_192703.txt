@@ -1,0 +1,21 @@
+EZOrder Restaurant
+Purok 3 Sitio Sampaguita
+Consolacion, Cebu
+09951236201
+-------------------------------------------------------------------
+Item 						Qty 			Price
+-------------------------------------------------------------------
+ Beef Wellington  			2				1332.00
+ Ramen				2				09.98
+ Leche Flan  				2				05.98
+ Tortang Talong  			2				05.98
+ Pork Sisig  				2				80.00
+ Tinolang Manok  			2				06.00
+
+Sub-Total: 1439.94
+VAT (12%): 172.79
+Total Amount with VAT: 1612.73
+Total: 1439.94
+Pay Bills: 1700.00
+Change: 87.27
+Order#: 1
